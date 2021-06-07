@@ -8,9 +8,48 @@ const getRandomInteger = (firstInteger, lastInteger) => {
 
 const getCommentValidity = (comment, maxSymbols) =>  comment.length <= maxSymbols;
 
-// функция для создания 25 объектов
-
 const NUMBER_OF_OBJECT = 25;
+
+// создаем массив id от 1 до 25
+
+const ID_ARRAY = new Array;
+for (let i = 25; i > 0 ; i--) {
+  ID_ARRAY.push(i);
+}
+
+const getId = () => {
+  const id = ID_ARRAY[ID_ARRAY.length-1];
+  ID_ARRAY.pop();
+
+  return id;
+};
+
+// создаем массив номеров фото
+
+const IMAGE_NUMBERS = ID_ARRAY.slice();
+
+const getImageNumbers = () => {
+  const number = IMAGE_NUMBERS[IMAGE_NUMBERS.length-1];
+  IMAGE_NUMBERS.pop();
+
+  return number;
+};
+
+// создаем массив для идентификаторов комментариев
+
+const COMMENTS_ID = [
+  14, 18, 45, 19, 22, 33, 45, 56, 9, 12, 11, 23, 26, 27, 28, 39, 43, 44, 89, 90, 99, 98, 76, 144, 9999,
+];
+
+const getCommentId = () => {
+  const commentId = COMMENTS_ID[COMMENTS_ID.length-1];
+  COMMENTS_ID.pop();
+
+  return commentId;
+};
+
+// создаем массив для текста комментария
+
 const COMMENTS = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
@@ -21,6 +60,9 @@ const COMMENTS = [
   'Лица у людей на фотке перекошены, как будто их избивают.',
   'Как можно было поймать такой неудачный момент?!',
 ];
+
+// создаем массив для имен
+
 const NAMES = [
   'Артем',
   'Andrey',
@@ -30,40 +72,24 @@ const NAMES = [
   'Dariya',
   'Gleb',
   'Tihon',
-]
+];
 
 const createFotoDescription = () => {
   return {
-    id: getRandomInteger(1, 25),
-    url: 'photos/' + getRandomInteger(1, 25),
-    description: 'Описание для фотографии',
+    id: getId(),
+    url: 'photos/' + getImageNumbers() + '.jpg',
+    description: 'Это описание, я его придумал',
     likes: getRandomInteger(15, 200),
     comments: {
-      id: getRandomInteger(1, 25),
+      id: getCommentId(),
       avatar: 'img/avatar-' + getRandomInteger(1, 6) + '.svg',
-      message: ,
-      name: ,
+      message: COMMENTS[getRandomInteger(0, COMMENTS.length-1)],
+      name: NAMES[getRandomInteger(0, NAMES.length-1)],
     }
   };
 };
 
-createFotoDescription();
+const fotoDescriptions = new Array(NUMBER_OF_OBJECT).fill(null).map(() => createFotoDescription());
 
-// id 1-25
-
-// url, строка — адрес картинки вида photos/{{i}}.jpg, где {{i}} — это число от 1 до 25. Адреса картинок не должны повторяться.
-
-// description, строка — описание фотографии. Описание придумайте самостоятельно.
-
-// likes, число — количество лайков, поставленных фотографии. Случайное число от 15 до 200.
-
-// comments, массив объектов — список комментариев, оставленных другими пользователями к этой фотографии.
-// Количество комментариев к каждой фотографии вы определяете на своё усмотрение.
-// Все комментарии генерируются случайным образом. Пример описания объекта с комментарием:
-
-/* {
-  id: 135,
-  avatar: 'img/avatar-6.svg',
-  message: 'В целом всё неплохо. Но не всё.',
-  name: 'Артём',
-} */
+fotoDescriptions;
+getCommentValidity;
