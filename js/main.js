@@ -13,8 +13,8 @@ const NUMBER_OF_OBJECT = 25;
 // создаем массив id от 1 до 25
 
 const ID_ARRAY = new Array;
-for (let i = 25; i > 0 ; i--) {
-  ID_ARRAY.push(i);
+for (let counter = 25; counter > 0 ; counter--) {
+  ID_ARRAY.push(counter);
 }
 
 const getId = () => {
@@ -37,11 +37,13 @@ const getImageNumbers = () => {
 
 // создаем массив для идентификаторов комментариев
 
-const COMMENTS_ID = [
-  14, 18, 45, 19, 22, 33, 45, 56, 9, 12, 11, 23, 26, 27, 28, 39, 43, 44, 89, 90, 99, 98, 76, 144, 9999,
-];
+const COMMENTS_ID = [];
+for (let counter = 75; counter > 0 ; counter--) {
+  COMMENTS_ID.push(counter);
+}
 
 const getCommentId = () => {
+
   const commentId = COMMENTS_ID[COMMENTS_ID.length-1];
   COMMENTS_ID.pop();
 
@@ -74,22 +76,23 @@ const NAMES = [
   'Tihon',
 ];
 
-const createFotoDescription = () => {
-  return {
-    id: getId(),
-    url: 'photos/' + getImageNumbers() + '.jpg',
-    description: 'Это описание, я его придумал',
-    likes: getRandomInteger(15, 200),
-    comments: {
-      id: getCommentId(),
-      avatar: 'img/avatar-' + getRandomInteger(1, 6) + '.svg',
-      message: COMMENTS[getRandomInteger(0, COMMENTS.length-1)],
-      name: NAMES[getRandomInteger(0, NAMES.length-1)],
-    }
-  };
-};
+const createCommentsArray = () => ({
+  id: getCommentId(),
+  avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
+  message: COMMENTS[getRandomInteger(0, COMMENTS.length-1)],
+  name: NAMES[getRandomInteger(0, NAMES.length-1)],
+});
 
-const fotoDescriptions = new Array(NUMBER_OF_OBJECT).fill(null).map(() => createFotoDescription());
+const createPhotoDescription = () => ({
+  id: getId(),
+  url: `photos/${getImageNumbers()}.jpg`,
+  description: 'Это описание, я его придумал',
+  likes: getRandomInteger(15, 200),
+  comments: new Array(getRandomInteger(1, 3)).fill(null).map(() => createCommentsArray()),
+});
 
+const fotoDescriptions = new Array(NUMBER_OF_OBJECT).fill(null).map(() => createPhotoDescription());
+
+console.log(fotoDescriptions);
 fotoDescriptions;
 getCommentValidity;
