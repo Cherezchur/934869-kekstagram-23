@@ -93,6 +93,5 @@ const createPhotoDescription = () => ({
 
 const fotoDescriptions = new Array(NUMBER_OF_OBJECT).fill(null).map(() => createPhotoDescription());
 
-console.log(fotoDescriptions);
 fotoDescriptions;
 getCommentValidity;
