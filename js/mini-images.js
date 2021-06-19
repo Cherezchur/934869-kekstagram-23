@@ -15,9 +15,9 @@ const getPicturesContainer = (data) => {
     pictureElement.querySelector('.picture__comments').textContent = comments.length;
     pictureListFragment.appendChild(pictureElement);
   });
-  
+
   picturesContainer.appendChild(pictureListFragment);
-}
+};
 
 getPicturesContainer(photoDescriptions);
 

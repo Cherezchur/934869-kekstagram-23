@@ -8,8 +8,6 @@ const getRandomInteger = (firstInteger, lastInteger) => {
 
 const getCommentValidity = (comment, maxSymbols) =>  comment.length <= maxSymbols;
 
-const isEscEvent = (evt) => {
-  return evt.key === 'Escape' || evt.key === 'Esc';
-};
+const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
 export {getRandomInteger, getCommentValidity, isEscEvent};
