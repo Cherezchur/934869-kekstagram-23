@@ -20,4 +20,5 @@ const getPicturesContainer = (data) => {
 }
 
 getPicturesContainer(photoDescriptions);
+
 export {picturesContainer};
