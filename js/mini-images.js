@@ -15,7 +15,7 @@ const getPicturesContainer = (data) => {
 
     pictureElement.addEventListener('click', () => {
       renderPopup({url, likes, comments});
-    })
+    });
 
     pictureListFragment.appendChild(pictureElement);
   });

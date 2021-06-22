@@ -53,6 +53,7 @@ const renderPopup = (data) => {
       bigPicture.classList.add('hidden');
     }
   });
-}
+};
 
 export {renderPopup};
+
