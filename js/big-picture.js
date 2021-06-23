@@ -12,7 +12,7 @@ const renderPopup = (data) => {
   }
   const socialCommentsCount = bigPicture.querySelector('.social__comment-count');
   const commentsLoader = bigPicture.querySelector('.comments-loader');
-  const closeButton = bigPicture.querySelector('.cancel');
+  const closeBigPictureButton = bigPicture.querySelector('.cancel');
 
   bigPicture.classList.remove('hidden');
   bigPictureImage.setAttribute('src', data.url);
@@ -44,7 +44,7 @@ const renderPopup = (data) => {
     socialComments.appendChild(socialComment);
   }
 
-  closeButton.addEventListener('click', () => {
+  closeBigPictureButton.addEventListener('click', () => {
     bigPicture.classList.add('hidden');
   });
 
