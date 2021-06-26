@@ -52,17 +52,20 @@ const closeBigPicturePopup = () => {
   bigPictureImage.setAttribute('src', '');
   likesCount.textContent = '';
   commentsCount.textContent = '';
-  socialComments.removeChild(socialComment);
-}
+
+  for (let counter = Array.from(socialComments.children).length - 1 ; counter >= 0 ; counter-- ) {
+    socialComments.removeChild(Array.from(socialComments.children)[counter]);
+  }
+};
 
 closeBigPictureButton.addEventListener('click', () => {
-  closeBigPicturePopup()
+  closeBigPicturePopup();
 });
 
 document.addEventListener('keydown', (evt) => {
   if(isEscEvent(evt)) {
     evt.preventDefault();
-    closeBigPicturePopup()
+    closeBigPicturePopup();
   }
 });
 
