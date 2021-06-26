@@ -14,6 +14,7 @@ const getPicturesContainer = (data) => {
     pictureElement.querySelector('.picture__comments').textContent = comments.length;
 
     pictureElement.addEventListener('click', () => {
+      document.body.classList.add('modal-open');
       renderPopup({url, likes, comments});
     });
 
