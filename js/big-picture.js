@@ -1,18 +1,19 @@
 import {isEscEvent} from './util.js';
 
+const bigPicture = document.querySelector('.big-picture');
+const closeBigPictureButton = bigPicture.querySelector('.cancel');
+const bigPictureImage = bigPicture.querySelector('.big-picture__img').querySelector('img');
+const likesCount = bigPicture.querySelector('.likes-count');
+const commentsCount = bigPicture.querySelector('.comments-count');
+const socialComments = bigPicture.querySelector('.social__comments');
+const socialCommentsCount = bigPicture.querySelector('.social__comment-count');
+const commentsLoader = bigPicture.querySelector('.comments-loader');
+
 const renderPopup = (data) => {
-  const bigPicture = document.querySelector('.big-picture');
-  const bigPictureImage = bigPicture.querySelector('.big-picture__img').querySelector('img');
-  const likesCount = bigPicture.querySelector('.likes-count');
-  const commentsCount = bigPicture.querySelector('.comments-count');
-  const socialComments = bigPicture.querySelector('.social__comments');
   for (let counter = socialComments.children.length - 1 ; counter >= 0 ; counter--) {
     const comment = socialComments.children[counter];
     comment.parentElement.removeChild(comment);
   }
-  const socialCommentsCount = bigPicture.querySelector('.social__comment-count');
-  const commentsLoader = bigPicture.querySelector('.comments-loader');
-  const closeButton = bigPicture.querySelector('.cancel');
 
   bigPicture.classList.remove('hidden');
   bigPictureImage.setAttribute('src', data.url);
@@ -43,17 +44,30 @@ const renderPopup = (data) => {
 
     socialComments.appendChild(socialComment);
   }
-
-  closeButton.addEventListener('click', () => {
-    bigPicture.classList.add('hidden');
-  });
-
-  document.addEventListener('keydown', () => {
-    if(isEscEvent) {
-      bigPicture.classList.add('hidden');
-    }
-  });
 };
+
+const closeBigPicturePopup = () => {
+  document.body.classList.remove('modal-open');
+  bigPicture.classList.add('hidden');
+  bigPictureImage.setAttribute('src', '');
+  likesCount.textContent = '';
+  commentsCount.textContent = '';
+
+  for (let counter = Array.from(socialComments.children).length - 1 ; counter >= 0 ; counter-- ) {
+    socialComments.removeChild(Array.from(socialComments.children)[counter]);
+  }
+};
+
+closeBigPictureButton.addEventListener('click', () => {
+  closeBigPicturePopup();
+});
+
+document.addEventListener('keydown', (evt) => {
+  if(isEscEvent(evt)) {
+    evt.preventDefault();
+    closeBigPicturePopup();
+  }
+});
 
 export {renderPopup};
 
