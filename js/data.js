@@ -80,7 +80,7 @@ const createPhotoDescription = () => ({
   url: `photos/${getImageNumbers()}.jpg`,
   description: 'Это описание, я его придумал',
   likes: getRandomInteger(15, 200),
-  comments: new Array(getRandomInteger(1, 3)).fill(null).map(() => createCommentsArray()),
+  comments: new Array(getRandomInteger(1, 20)).fill(null).map(() => createCommentsArray()),
 });
 
 const photoDescriptions = new Array(NUMBER_OF_OBJECT).fill(null).map(() => createPhotoDescription());

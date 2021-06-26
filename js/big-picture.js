@@ -19,31 +19,65 @@ const renderPopup = (data) => {
   bigPictureImage.setAttribute('src', data.url);
   likesCount.textContent = data.likes;
   commentsCount.textContent = data.comments.length;
-  socialCommentsCount.classList.add('hidden');
-  commentsLoader.classList.add('hidden');
   document.body.classList.add('modal-open');
 
-  for (let counter = data.comments.length - 1 ; counter >= 0 ; counter-- ) {
-    const socialComment = document.createElement('li');
-    const socialPicture = document.createElement('img');
-    const socialText = document.createElement('p');
+  const getSocialComments = () => {
+    for (let counter = data.comments.length - 1 ; counter >= 0 ; counter-- ) {
+      const socialComment = document.createElement('li');
+      const socialPicture = document.createElement('img');
+      const socialText = document.createElement('p');
 
-    socialComment.classList.add('social__comment');
+      socialComment.classList.add('social__comment');
+      socialComment.classList.add('hidden');
 
-    socialPicture.classList.add('social__picture');
-    socialPicture.setAttribute('width', '35');
-    socialPicture.setAttribute('height', '35');
-    socialPicture.setAttribute('src', data.comments[counter].avatar);
-    socialPicture.setAttribute('alt', data.comments[counter].name);
+      socialPicture.classList.add('social__picture');
+      socialPicture.setAttribute('width', '35');
+      socialPicture.setAttribute('height', '35');
+      socialPicture.setAttribute('src', data.comments[counter].avatar);
+      socialPicture.setAttribute('alt', data.comments[counter].name);
 
-    socialText.classList.add('social_text');
-    socialText.textContent = data.comments[counter].message;
+      socialText.classList.add('social_text');
+      socialText.textContent = data.comments[counter].message;
 
-    socialComment.appendChild(socialPicture);
-    socialComment.appendChild(socialText);
+      socialComment.appendChild(socialPicture);
+      socialComment.appendChild(socialText);
 
-    socialComments.appendChild(socialComment);
-  }
+      socialComments.appendChild(socialComment);
+    }
+  };
+
+  getSocialComments();
+
+  let COMMENT_NUMBERS = 5;
+
+  const displayingCommets = () => {
+    const socialCommentsArray = Array.from(socialComments.children);
+
+    if (socialCommentsArray.length < 5) {
+      socialCommentsCount.innerHTML = `${data.comments.length} из <span class="comments-count">${data.comments.length}</span> комментариев`;
+      for (let counter = socialCommentsArray.length - 1; counter >= 0 ; counter--) {
+        socialCommentsArray[counter].classList.remove('hidden');
+      }
+      commentsLoader.classList.add('hidden');
+    } else {
+      socialCommentsCount.innerHTML = `${COMMENT_NUMBERS} из <span class="comments-count">${data.comments.length}</span> комментариев`;
+      for (let counter = 0; counter <= COMMENT_NUMBERS - 1 ; counter++) {
+        if (socialCommentsArray.length <= COMMENT_NUMBERS) {
+          commentsLoader.classList.add('hidden');
+          socialCommentsCount.innerHTML = `${data.comments.length} из <span class="comments-count">${data.comments.length}</span> комментариев`;
+        }
+        socialCommentsArray[counter].classList.remove('hidden');
+      }
+    }
+  };
+
+  displayingCommets();
+
+  commentsLoader.addEventListener('click', () => {
+    COMMENT_NUMBERS += 5;
+    displayingCommets();
+  });
+
 };
 
 const closeBigPicturePopup = () => {
@@ -52,6 +86,7 @@ const closeBigPicturePopup = () => {
   bigPictureImage.setAttribute('src', '');
   likesCount.textContent = '';
   commentsCount.textContent = '';
+  commentsLoader.classList.remove('hidden');
 
   for (let counter = Array.from(socialComments.children).length - 1 ; counter >= 0 ; counter-- ) {
     socialComments.removeChild(Array.from(socialComments.children)[counter]);
