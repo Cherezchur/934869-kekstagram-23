@@ -9,7 +9,10 @@ const socialComments = bigPicture.querySelector('.social__comments');
 const socialCommentsCount = bigPicture.querySelector('.social__comment-count');
 const commentsLoader = bigPicture.querySelector('.comments-loader');
 
+let commentsNumber = 5;
+
 const renderPopup = (data) => {
+
   for (let counter = socialComments.children.length - 1 ; counter >= 0 ; counter--) {
     const comment = socialComments.children[counter];
     comment.parentElement.removeChild(comment);
@@ -46,23 +49,27 @@ const renderPopup = (data) => {
     }
   };
 
-  getSocialComments();
-
-  let COMMENT_NUMBERS = 5;
-
   const displayingCommets = () => {
     const socialCommentsArray = Array.from(socialComments.children);
 
-    if (socialCommentsArray.length < 5) {
+    let visibleCommentsCouter = 0;
+
+    socialCommentsArray.forEach((element) => {
+      if (element.classList.contains('hidden')) {
+        visibleCommentsCouter++;
+      }
+    });
+
+    if (visibleCommentsCouter < 5) {
       socialCommentsCount.innerHTML = `${data.comments.length} из <span class="comments-count">${data.comments.length}</span> комментариев`;
       for (let counter = socialCommentsArray.length - 1; counter >= 0 ; counter--) {
         socialCommentsArray[counter].classList.remove('hidden');
       }
       commentsLoader.classList.add('hidden');
     } else {
-      socialCommentsCount.innerHTML = `${COMMENT_NUMBERS} из <span class="comments-count">${data.comments.length}</span> комментариев`;
-      for (let counter = 0; counter <= COMMENT_NUMBERS - 1 ; counter++) {
-        if (socialCommentsArray.length <= COMMENT_NUMBERS) {
+      socialCommentsCount.innerHTML = `${commentsNumber} из <span class="comments-count">${data.comments.length}</span> комментариев`;
+      for (let counter = 0; counter <= commentsNumber - 1 ; counter++) {
+        if (socialCommentsArray.length <= commentsNumber) {
           commentsLoader.classList.add('hidden');
           socialCommentsCount.innerHTML = `${data.comments.length} из <span class="comments-count">${data.comments.length}</span> комментариев`;
         }
@@ -71,38 +78,53 @@ const renderPopup = (data) => {
     }
   };
 
+  const commentsLoaderClick = () => {
+    commentsNumber += 5;
+    displayingCommets();
+  };
+
+  // const onPopupEskKeydown = (evt) => {
+
+  // };
+
+  const onCloseBigPicturePopup = (evt) => {
+
+    const CloseBigPicturePopup = () => {
+      evt.preventDefault();
+      document.body.classList.remove('modal-open');
+      bigPicture.classList.add('hidden');
+      bigPictureImage.setAttribute('src', '');
+      likesCount.textContent = '';
+      commentsCount.textContent = '';
+      commentsLoader.classList.remove('hidden');
+
+      for (let counter = Array.from(socialComments.children).length - 1 ; counter >= 0 ; counter-- ) {
+        socialComments.removeChild(Array.from(socialComments.children)[counter]);
+      }
+
+      commentsNumber = 5;
+
+      commentsLoader.removeEventListener('click', commentsLoaderClick);
+      closeBigPictureButton.removeEventListener('click', onCloseBigPicturePopup);
+      document.removeEventListener('keydown', onCloseBigPicturePopup);
+    };
+
+    if(document.activeElement.className === 'big-picture__cancel  cancel') {
+      CloseBigPicturePopup();
+    } else if(isEscEvent(evt)) {
+      CloseBigPicturePopup();
+    }
+  };
+
+  getSocialComments();
   displayingCommets();
 
-  commentsLoader.addEventListener('click', () => {
-    COMMENT_NUMBERS += 5;
-    displayingCommets();
-  });
+  commentsLoader.addEventListener('click', commentsLoaderClick);
 
+  closeBigPictureButton.addEventListener('click', onCloseBigPicturePopup);
+
+  document.addEventListener('keydown', onCloseBigPicturePopup);
 };
-
-const closeBigPicturePopup = () => {
-  document.body.classList.remove('modal-open');
-  bigPicture.classList.add('hidden');
-  bigPictureImage.setAttribute('src', '');
-  likesCount.textContent = '';
-  commentsCount.textContent = '';
-  commentsLoader.classList.remove('hidden');
-
-  for (let counter = Array.from(socialComments.children).length - 1 ; counter >= 0 ; counter-- ) {
-    socialComments.removeChild(Array.from(socialComments.children)[counter]);
-  }
-};
-
-closeBigPictureButton.addEventListener('click', () => {
-  closeBigPicturePopup();
-});
-
-document.addEventListener('keydown', (evt) => {
-  if(isEscEvent(evt)) {
-    evt.preventDefault();
-    closeBigPicturePopup();
-  }
-});
 
 export {renderPopup};
 
