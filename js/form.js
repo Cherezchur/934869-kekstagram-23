@@ -60,9 +60,7 @@ uploadField.addEventListener('change', () => {
 
   document.addEventListener('keydown', (evt) => {
 
-    const focusedElement = document.activeElement;
-
-    if (focusedElement.className === 'text__hashtags' || focusedElement.className === 'text__description') {
+    if (document.activeElement.className === 'text__hashtags' || document.activeElement.className === 'text__description') {
       evt.stopPropagation();
     } else if (isEscEvent(evt)) {
       evt.preventDefault();
