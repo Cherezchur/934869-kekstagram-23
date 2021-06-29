@@ -6,14 +6,6 @@ const closeButtonNewFilePopup = newFilePopup.querySelector('.cancel');
 const hashTagField = newFilePopup.querySelector('.text__hashtags');
 const commendField = newFilePopup.querySelector('.text__description');
 
-const closeNewFilePopup = () => {
-  newFilePopup.classList.add('hidden');
-  document.body.classList.remove('modal-open');
-  uploadField.value = '';
-  hashTagField.value = '';
-  commendField.vakue = '';
-};
-
 uploadField.addEventListener('change', () => {
 
   newFilePopup.classList.remove('hidden');
@@ -56,16 +48,35 @@ uploadField.addEventListener('change', () => {
     }
   });
 
-  closeButtonNewFilePopup.addEventListener('click', closeNewFilePopup);
+  const onCloseNewFilePopup = (evt) => {
 
-  document.addEventListener('keydown', (evt) => {
+    const closeNewFilePopup = () => {
 
-    if (document.activeElement.className === 'text__hashtags' || document.activeElement.className === 'text__description') {
-      evt.stopPropagation();
-    } else if (isEscEvent(evt)) {
       evt.preventDefault();
+
+      if (document.activeElement.className === 'text__hashtags' || document.activeElement.className === 'text__description') {
+        return;
+      }
+
+      newFilePopup.classList.add('hidden');
+      document.body.classList.remove('modal-open');
+      uploadField.value = '';
+      hashTagField.value = '';
+      commendField.vakue = '';
+
+      document.removeEventListener('keydown', onCloseNewFilePopup);
+      closeButtonNewFilePopup.removeEventListener('click', closeNewFilePopup);
+    };
+
+    if (document.activeElement.className === 'img-upload__cancel  cancel') {
+      closeNewFilePopup();
+    } else if (isEscEvent(evt)) {
       closeNewFilePopup();
     }
-  });
+  };
+
+  closeButtonNewFilePopup.addEventListener('click', onCloseNewFilePopup);
+
+  document.addEventListener('keydown', onCloseNewFilePopup);
 });
 
