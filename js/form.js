@@ -9,6 +9,7 @@ const buttonSmaller = document.querySelector('.scale__control--smaller');
 const buttonBigger = document.querySelector('.scale__control--bigger');
 const uploudedImage = document.querySelector('.img-upload__preview');
 const scaleField = document.querySelector('.scale__control--value');
+const effectsList = newFilePopup.querySelectorAll('.effects__radio');
 
 uploadField.addEventListener('change', () => {
 
@@ -52,47 +53,59 @@ uploadField.addEventListener('change', () => {
     }
   });
 
-  const reducedImage = () => {
-    
-    switch (scaleField.value) {
-        case '100%': 
-            uploudedImage.style.transform = 'scale(0.75)';
-            buttonBigger.removeAttribute('disabled', 'disabled');
-            scaleField.value = '75%';
-            break;
-        case '75%':
-            uploudedImage.style.transform = 'scale(0.5)';
-            scaleField.value = '50%';
-            break;
-        case '50%':
-            uploudedImage.style.transform = 'scale(0.25)';
-            buttonSmaller.setAttribute('disabled', 'disabled');
-            scaleField.value = '25%';
-            break;
+
+  const addingEffects = (evt) => {
+
+    const targetElementValue  = evt.target.value;
+
+    if (uploudedImage.classList.length > 2) {
+      uploudedImage.className = 'img-upload__preview';
     }
 
-  }
+    uploudedImage.classList.add(`effects__preview--${targetElementValue}`);
+  };
+
+  const reducedImage = () => {
+
+    switch (scaleField.value) {
+      case '100%':
+        uploudedImage.style.transform = 'scale(0.75)';
+        buttonBigger.removeAttribute('disabled', 'disabled');
+        scaleField.value = '75%';
+        break;
+      case '75%':
+        uploudedImage.style.transform = 'scale(0.5)';
+        scaleField.value = '50%';
+        break;
+      case '50%':
+        uploudedImage.style.transform = 'scale(0.25)';
+        buttonSmaller.setAttribute('disabled', 'disabled');
+        scaleField.value = '25%';
+        break;
+    }
+
+  };
 
   const largeImage = () => {
 
-      switch (scaleField.value) {
-          case '75%': 
-              uploudedImage.style.transform = 'scale(1)';
-              buttonBigger.setAttribute('disabled', 'disabled');
-              scaleField.value = '100%';
-              break;
-          case '50%':
-              uploudedImage.style.transform = 'scale(0.75)';
-              scaleField.value = '75%';
-              break;
-          case '25%':
-              uploudedImage.style.transform = 'scale(0.5)';
-              buttonSmaller.removeAttribute('disabled', 'disabled');
-              scaleField.value = '50%';
-              break;
-      }
+    switch (scaleField.value) {
+      case '75%':
+        uploudedImage.style.transform = 'scale(1)';
+        buttonBigger.setAttribute('disabled', 'disabled');
+        scaleField.value = '100%';
+        break;
+      case '50%':
+        uploudedImage.style.transform = 'scale(0.75)';
+        scaleField.value = '75%';
+        break;
+      case '25%':
+        uploudedImage.style.transform = 'scale(0.5)';
+        buttonSmaller.removeAttribute('disabled', 'disabled');
+        scaleField.value = '50%';
+        break;
+    }
 
-  }
+  };
 
   const onCloseNewFilePopup = (evt) => {
 
@@ -114,6 +127,9 @@ uploadField.addEventListener('change', () => {
       closeButtonNewFilePopup.removeEventListener('click', closeNewFilePopup);
       buttonBigger.removeEventListener('click', largeImage);
       buttonSmaller.removeEventListener('click', reducedImage);
+      for(let counter = 0 ; counter <= effectsList.length - 1 ; counter++) {
+        effectsList[counter].removeEventListener('click', addingEffects);
+      }
     };
 
     if (document.activeElement.className === 'img-upload__cancel  cancel') {
@@ -128,5 +144,11 @@ uploadField.addEventListener('change', () => {
   document.addEventListener('keydown', onCloseNewFilePopup);
   buttonBigger.addEventListener('click', largeImage);
   buttonSmaller.addEventListener('click', reducedImage);
+
+  for(let counter = 0 ; counter <= effectsList.length - 1 ; counter++) {
+    effectsList[counter].addEventListener('click', addingEffects);
+  }
 });
+
+export {uploudedImage, newFilePopup};
 
