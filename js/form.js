@@ -8,8 +8,31 @@ const commendField = newFilePopup.querySelector('.text__description');
 const buttonSmaller = document.querySelector('.scale__control--smaller');
 const buttonBigger = document.querySelector('.scale__control--bigger');
 const uploudedImage = document.querySelector('.img-upload__preview');
+const img = uploudedImage.querySelector('img');
 const scaleField = document.querySelector('.scale__control--value');
 const effectsList = newFilePopup.querySelectorAll('.effects__radio');
+const effectSlider = document.querySelector('.effect-level__slider');
+const effectLevelValue = document.querySelector('.effect-level__value');
+
+noUiSlider.create(effectSlider, {
+  range: {
+    min: 0,
+    max: 100,
+  },
+  start: 100,
+  step: 1,
+  format: {
+    to: function (value) {
+      if (Number.isInteger(value)) {
+        return value.toFixed(0);
+      }
+      return value.toFixed(1);
+    },
+    from: function (value) {
+      return parseFloat(value);
+    },
+  },
+});
 
 uploadField.addEventListener('change', () => {
 
@@ -53,17 +76,93 @@ uploadField.addEventListener('change', () => {
     }
   });
 
+  const getSliderOptions = (minValue, maxValue, stepValue) => {
+
+    effectSlider.noUiSlider.updateOptions({
+      range: {
+        min: minValue,
+        max: maxValue,
+      },
+      start: maxValue,
+      step: stepValue,
+      format: {
+        to: function (value) {
+          if (Number.isInteger(value)) {
+            return value.toFixed(0);
+          }
+          return value.toFixed(1);
+        },
+        from: function (value) {
+          return parseFloat(value);
+        },
+      },
+    });
+  };
+
+  let styleFilter;
+  effectSlider.setAttribute('style', 'display: none;');
 
   const addingEffects = (evt) => {
 
     const targetElementValue  = evt.target.value;
 
-    if (uploudedImage.classList.length > 2) {
-      uploudedImage.className = 'img-upload__preview';
+    if (img.classList.length === 2) {
+      img.className = 'img-upload__preview';
     }
 
-    uploudedImage.classList.add(`effects__preview--${targetElementValue}`);
+    img.classList.add(`effects__preview--${targetElementValue}`);
+
+    if(targetElementValue === 'none') {
+      effectSlider.setAttribute('style', 'display: none;');
+      img.setAttribute('style', 'filter: none;');
+      return;
+    } else {
+      effectSlider.setAttribute('style', 'display: block;');
+    }
+
+    switch (targetElementValue) {
+      case 'chrome':
+        styleFilter = 'grayscale';
+        getSliderOptions(0, 1, 0.1);
+        break;
+      case 'sepia':
+        styleFilter = 'sepia';
+        getSliderOptions(0, 1, 0.1);
+        break;
+      case 'marvin':
+        styleFilter = 'invert';
+        getSliderOptions(0, 100, 1);
+        break;
+      case 'phobos':
+        styleFilter = 'blur';
+        getSliderOptions(0, 3, 0.1);
+        break;
+      case 'heat':
+        styleFilter = 'brightness';
+        getSliderOptions(0, 3, 0.1);
+        break;
+      case 'none':
+        break;
+    }
+
+    effectSlider.noUiSlider.on('update', (stub, handle, unencoded) => {
+
+      if(Number.isInteger(unencoded[handle])) {
+        effectLevelValue.value = unencoded[handle].toFixed(0);
+      } else {
+        effectLevelValue.value = unencoded[handle].toFixed(1);
+      }
+
+      if (targetElementValue === 'marvin') {
+        return img.setAttribute('style', `filter: ${styleFilter}(${effectLevelValue.value}%)`);
+      } else if (targetElementValue === 'phobos') {
+        return img.setAttribute('style', `filter: ${styleFilter}(${effectLevelValue.value}px)`);
+      }
+      img.setAttribute('style', `filter: ${styleFilter}(${effectLevelValue.value})`);
+    });
+
   };
+
 
   const reducedImage = () => {
 
@@ -138,6 +237,8 @@ uploadField.addEventListener('change', () => {
       closeNewFilePopup();
     }
 
+    effectSlider.noUiSlider.off('update');
+
   };
 
   closeButtonNewFilePopup.addEventListener('click', onCloseNewFilePopup);
@@ -149,6 +250,4 @@ uploadField.addEventListener('change', () => {
     effectsList[counter].addEventListener('click', addingEffects);
   }
 });
-
-export {uploudedImage, newFilePopup};
 
