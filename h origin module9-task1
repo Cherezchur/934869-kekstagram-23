@@ -1,0 +1,229 @@
+[33mcommit 4c2eb61afac89bbaf4e71a75fe57b29e41caff12[m[33m ([m[1;36mHEAD -> [m[1;32mmodule9-task1[m[33m)[m
+Author: Cherezchur <49197652+Cherezchur@users.noreply.github.com>
+Date:   Sat Jul 3 11:47:28 2021 +0300
+
+    Внесены правки в функции масштаба и фильтров, чтобы не затирались значения при изменение стилей картинки
+
+[33mcommit f4c5e97d3b2319bbf1d0ef9b675e95ef54565dd0[m[33m ([m[1;31morigin/module9-task1[m[33m)[m
+Author: Cherezchur <49197652+Cherezchur@users.noreply.github.com>
+Date:   Fri Jul 2 02:20:09 2021 +0300
+
+    Реализован слайдер для фильтров
+
+[33mcommit 7e550b1bd7a0b55c8590a31461ee3b6bf518b733[m
+Author: Cherezchur <49197652+Cherezchur@users.noreply.github.com>
+Date:   Wed Jun 30 15:22:06 2021 +0300
+
+    Создана функция для переключения эффектов изображения
+
+[33mcommit e7732b9cb81c96153621e54b2061abd1f3be6933[m
+Author: Cherezchur <49197652+Cherezchur@users.noreply.github.com>
+Date:   Wed Jun 30 00:01:48 2021 +0300
+
+    В форму загрузки фотографии добавлен функционал масштабирования
+
+[33mcommit f02f1f6ca41111e5a19f109486f05a041c714d85[m
+Author: Cherezchur <49197652+Cherezchur@users.noreply.github.com>
+Date:   Tue Jun 29 08:33:27 2021 +0300
+
+    Доработана логика события закрытия окна формы
+
+[33mcommit 4fe214b1668fb3c97163fd37c23aeff4f520670b[m[33m ([m[1;31macademy/master[m[33m, [m[1;32mmaster[m[33m)[m
+Author: Keks <keks@htmlacademy.ru>
+Date:   Mon Jun 28 19:53:31 2021 +0300
+
+    :package:
+
+[33mcommit 0bb05e51d80f10210457a7a28d3e862a0dac3466[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Merge: 9d9b031 ffa94a0
+Author: Keks <keksobot@users.noreply.github.com>
+Date:   Mon Jun 28 09:44:42 2021 +0300
+
+    Merge pull request #8 from Cherezchur/module8-task2
+
+[33mcommit ffa94a017cf0d7e0b3d0b5b120ea2d9f30425293[m[33m ([m[1;31morigin/module8-task2[m[33m, [m[1;32mmodule8-task2[m[33m)[m
+Author: Cherezchur <49197652+Cherezchur@users.noreply.github.com>
+Date:   Sun Jun 27 19:08:42 2021 +0300
+
+    Внесены правки в реализацию открытия окна большого изображения и окна формы + сделана логика для слушателей событий
+
+[33mcommit 9d9b031780ea3e406d4379299c9d90eb6ee306f9[m
+Merge: d59c6d9 1f9ef45
+Author: Keks <keksobot@users.noreply.github.com>
+Date:   Sat Jun 26 22:16:31 2021 +0300
+
+    Merge pull request #7 from Cherezchur/module8-task1
+
+[33mcommit ef49a0b049486892a8de2023cacd13f1fa58278b[m
+Author: Cherezchur <49197652+Cherezchur@users.noreply.github.com>
+Date:   Sat Jun 26 19:08:51 2021 +0300
+
+    Добавлен функционал отображения комментариев для попапа с большой фотографией
+
+[33mcommit 1f9ef459b5dac2cfe0e5e876039dda0731f9b5a2[m[33m ([m[1;31morigin/module8-task1[m[33m, [m[1;32mmodule8-task1[m[33m)[m
+Author: Cherezchur <49197652+Cherezchur@users.noreply.github.com>
+Date:   Sat Jun 26 14:01:16 2021 +0300
+
+    Исправлена логика удаления комментариев при закрытие модального окна большой фотографии
+
+[33mcommit 345eda62eed21a0e34fb09cc158d815140021186[m
+Author: Cherezchur <49197652+Cherezchur@users.noreply.github.com>
+Date:   Sat Jun 26 13:43:03 2021 +0300
+
+    Добавлена валидация для формы, логика закрытия и открытия окна формы а также добавлена логика удаления лишних элементов DOM при закрытие модальных окон
+
+[33mcommit 847f35fd42f9642f759c2a6ca1f90344e071d155[m
+Author: Cherezchur <49197652+Cherezchur@users.noreply.github.com>
+Date:   Wed Jun 23 08:58:58 2021 +0300
+
+    Реализовано открытие и закрытие окна загрузки изображения
+
+[33mcommit d59c6d9fb33841279a3484fa719d2abc890705d2[m
+Merge: 5dc023d 3f0987f
+Author: Keks <keksobot@users.noreply.github.com>
+Date:   Tue Jun 22 22:41:54 2021 +0300
+
+    Merge pull request #6 from Cherezchur/module7-task2
+
+[33mcommit 3f0987fd7881019668681fc17295e948d75bfbd8[m[33m ([m[1;31morigin/module7-task2[m[33m, [m[1;32mmodule7-task2[m[33m)[m
+Author: Cherezchur <49197652+Cherezchur@users.noreply.github.com>
+Date:   Tue Jun 22 19:41:11 2021 +0300
+
+    исправлены ошибки es-lint
+
+[33mcommit 9dddfd58fba02865bef6f49e350b3d76218ce937[m
+Author: Cherezchur <49197652+Cherezchur@users.noreply.github.com>
+Date:   Tue Jun 22 19:33:49 2021 +0300
+
+    События отрисовки большого изображения добавлены в функцию отрисовку мини изображений
+
+[33mcommit d3cee398a7eb1fa1e3299f2c3774e191744a9d5e[m
+Author: Cherezchur <49197652+Cherezchur@users.noreply.github.com>
+Date:   Sat Jun 19 16:00:30 2021 +0300
+
+    Исправлены ошибки линтера
+
+[33mcommit e34e609596e004b3aac3d6bf19fdf1190bfca96c[m
+Author: Cherezchur <49197652+Cherezchur@users.noreply.github.com>
+Date:   Sat Jun 19 15:47:58 2021 +0300
+
+    Подготовлен и импортирован модуль big-picture
+
+[33mcommit ac8d9c447ba5c4db1280132eccddfe2e4d61b8f3[m
+Author: Cherezchur <49197652+Cherezchur@users.noreply.github.com>
+Date:   Fri Jun 18 01:00:53 2021 +0300
+
+    создан модуль для просмотра больших изображений, добавлены импорты зависимостей и реализована функция просмотра изображений без блока с комментариями
+
+[33mcommit 5dc023d43f889c832f480203473ad92d92300214[m
+Merge: 96c2a8a 60799e7
+Author: Keks <keksobot@users.noreply.github.com>
+Date:   Thu Jun 17 23:29:11 2021 +0300
+
+    Merge pull request #5 from Cherezchur/module7-task1
+
+[33mcommit 60799e7d240cbd7c32cec83e2d3936023e210304[m[33m ([m[1;31morigin/module7-task1[m[33m, [m[1;32mmodule7-task1[m[33m)[m
+Author: Cherezchur <49197652+Cherezchur@users.noreply.github.com>
+Date:   Thu Jun 17 00:17:27 2021 +0300
+
+    Исправлены ошибки ES-lint
+
+[33mcommit ad73701252394c396d46aad3e987f6523dc68c7f[m
+Author: Cherezchur <49197652+Cherezchur@users.noreply.github.com>
+Date:   Thu Jun 17 00:08:24 2021 +0300
+
+    Убраны пробелы при инициализации шаблона миниатюры
+
+[33mcommit e9cb608372fca43252d0b767a7798f747a7339a6[m
+Author: Cherezchur <49197652+Cherezchur@users.noreply.github.com>
+Date:   Thu Jun 17 00:00:21 2021 +0300
+
+    Подготовлен и подключен модуль по отрисовки миниатюр
+
+[33mcommit 96c2a8ab2d08b91712e8a0ba555d42635daecf0e[m
+Merge: 2e2e88f ab2e283
+Author: Keks <keksobot@users.noreply.github.com>
+Date:   Fri Jun 11 15:41:53 2021 +0300
+
+    Merge pull request #4 from Cherezchur/module5-task1
+
+[33mcommit 2e2e88fcf9abd8604c8c0455d518db71df7aa599[m
+Merge: 255b886 9bcb36f
+Author: Keks <keksobot@users.noreply.github.com>
+Date:   Fri Jun 11 09:39:38 2021 +0300
+
+    Merge pull request #3 from Cherezchur/module4-task1
+
+[33mcommit ab2e28398450471e243a59981c9f5c1695224b0c[m[33m ([m[1;31morigin/module5-task1[m[33m, [m[1;32mmodule5-task1[m[33m)[m
+Author: Cherezchur <49197652+Cherezchur@users.noreply.github.com>
+Date:   Fri Jun 11 00:03:14 2021 +0300
+
+    файл main.js разит на модули
+
+[33mcommit 9bcb36f5bd2273865fe94b921fba828e6d8fa71c[m[33m ([m[1;31morigin/module4-task1[m[33m, [m[1;32mmodule4-task1[m[33m)[m
+Author: Cherezchur <49197652+Cherezchur@users.noreply.github.com>
+Date:   Thu Jun 10 21:18:38 2021 +0300
+
+    Убрана команда console.log
+
+[33mcommit 97150b5dbb668db0163bb818d54ce58220e932ba[m
+Author: Cherezchur <49197652+Cherezchur@users.noreply.github.com>
+Date:   Thu Jun 10 21:12:06 2021 +0300
+
+    Доработана функция генерации временных данных
+
+[33mcommit 599792fac922dc4ad9fc97cb4bcc8de4cd17e586[m
+Author: Cherezchur <49197652+Cherezchur@users.noreply.github.com>
+Date:   Tue Jun 8 01:23:15 2021 +0300
+
+    удалил неиспользуемые утилитарные функции
+
+[33mcommit 2cf768cf83414951e62044595365670ce7826bcf[m
+Author: Cherezchur <49197652+Cherezchur@users.noreply.github.com>
+Date:   Tue Jun 8 01:13:12 2021 +0300
+
+    Подготовлен шаблон из 25 объектов
+
+[33mcommit 9c961006ccba2b30b21a018423f80847b5a2ac2b[m
+Author: Cherezchur <49197652+Cherezchur@users.noreply.github.com>
+Date:   Sun Jun 6 23:23:56 2021 +0300
+
+    подготовлена структура для создиния объектов
+
+[33mcommit 255b886d85ad989999368a20ad9180ca112a38a7[m
+Author: Keks <keks@htmlacademy.ru>
+Date:   Sun Jun 6 22:31:48 2021 +0300
+
+    :package:
+
+[33mcommit 5c33f958333ba08835406fca2cd9b0ac42558fd2[m
+Merge: eb89ac9 91df818
+Author: Keks <keksobot@users.noreply.github.com>
+Date:   Sat May 29 16:39:20 2021 +0300
+
+    Merge pull request #2 from Cherezchur/module2-task1
+
+[33mcommit 91df818308f48ac23b0117346314848bd9b488c4[m[33m ([m[1;31morigin/module2-task1[m[33m, [m[1;32mmodule2-task1[m[33m)[m
+Author: Cherezchur <49197652+Cherezchur@users.noreply.github.com>
+Date:   Sat May 29 16:09:45 2021 +0300
+
+    the helpers function are prepared
+
+[33mcommit eb89ac98653e434a4c1b771600827c6974838834[m
+Merge: 0256aa5 54bcb11
+Author: Keks <keksobot@users.noreply.github.com>
+Date:   Fri May 28 10:13:32 2021 +0300
+
+    Merge pull request #1 from Cherezchur/module1-task1
+
+[33mcommit 54bcb1197e27c4b1f8849f091d1b17bd28f01ad7[m[33m ([m[1;31morigin/module1-task1[m[33m, [m[1;32mmodule1-task1[m[33m)[m
+Author: Cherezchur <49197652+Cherezchur@users.noreply.github.com>
+Date:   Thu May 27 19:55:17 2021 +0300
+
+    added teacher name in readme.txt
+
+[33mcommit 0256aa5da537773d417c6e362ef1f810eba65a99[m
+Author: Keks <keks@htmlacademy.ru>
+Date:   Wed May 26 23:32:19 2021 +0300
+
+    :hatching_chick:
