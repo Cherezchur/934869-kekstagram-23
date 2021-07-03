@@ -83,13 +83,9 @@ const renderPopup = (data) => {
     displayingCommets();
   };
 
-  // const onPopupEskKeydown = (evt) => {
-
-  // };
-
   const onCloseBigPicturePopup = (evt) => {
 
-    const CloseBigPicturePopup = () => {
+    const closeBigPicturePopup = () => {
       evt.preventDefault();
       document.body.classList.remove('modal-open');
       bigPicture.classList.add('hidden');
@@ -109,10 +105,10 @@ const renderPopup = (data) => {
       document.removeEventListener('keydown', onCloseBigPicturePopup);
     };
 
-    if(document.activeElement.className === 'big-picture__cancel  cancel') {
-      CloseBigPicturePopup();
+    if(evt.type === 'click') {
+      closeBigPicturePopup();
     } else if(isEscEvent(evt)) {
-      CloseBigPicturePopup();
+      closeBigPicturePopup();
     }
   };
 
