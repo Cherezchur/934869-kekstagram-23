@@ -7,29 +7,26 @@ const commendField = newFilePopup.querySelector('.text__description');
 const effectsList = newFilePopup.querySelectorAll('.effects__radio');
 const scaleControl = newFilePopup.querySelector('.img-upload__scale');
 
-const closeFormPopup = () => {
-  newFilePopup.classList.add('hidden');
-  document.body.classList.remove('modal-open');
-  uploadField.value = '';
-  hashTagField.value = '';
-  commendField.value = '';
-  document.removeEventListener('keydown', onFormPopupEskKeydown);
-  closeButtonNewFilePopup.removeEventListener('click', onFormPopupClick);
-  scaleControl.removeEventListener('click', imageScale);
-  for(let counter = 0 ; counter <= effectsList.length - 1 ; counter++) {
-    effectsList[counter].removeEventListener('click', addingEffects);
-  }
-};
+const onCloseFormPopup = (evt) => {
 
-const onFormPopupClick = () => {
-  closeFormPopup();
-};
+  const closeFormPopup = () => {
+    newFilePopup.classList.add('hidden');
+    document.body.classList.remove('modal-open');
+    uploadField.value = '';
+    hashTagField.value = '';
+    commendField.value = '';
 
-const onFormPopupEskKeydown = (evt) => {
-  if(isEscEvent(evt)){
-    if (document.activeElement.className === 'text__hashtags' || document.activeElement.className === 'text__description') {
-      return;
+    document.removeEventListener('keydown', onCloseFormPopup);
+    closeButtonNewFilePopup.removeEventListener('click', onCloseFormPopup);
+    scaleControl.removeEventListener('click', imageScale);
+    for(let counter = 0 ; counter <= effectsList.length - 1 ; counter++) {
+      effectsList[counter].removeEventListener('click', addingEffects);
     }
+  };
+
+  if(evt.type === 'click') {
+    closeFormPopup();
+  } else if(isEscEvent(evt)) {
     closeFormPopup();
   }
 };
@@ -45,8 +42,8 @@ uploadField.addEventListener('change', () => {
   uploudedImage.className = 'img-upload__preview';
   uploudedImage.style = 'none';
 
-  document.addEventListener('keydown', onFormPopupEskKeydown);
-  closeButtonNewFilePopup.addEventListener('click', onFormPopupClick);
+  document.addEventListener('keydown', onCloseFormPopup);
+  closeButtonNewFilePopup.addEventListener('click', onCloseFormPopup);
   scaleControl.addEventListener('click', imageScale);
 
   for(let counter = 0 ; counter <= effectsList.length - 1 ; counter++) {
