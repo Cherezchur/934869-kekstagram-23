@@ -7,8 +7,8 @@ const hashTagField = newFilePopup.querySelector('.text__hashtags');
 const commendField = newFilePopup.querySelector('.text__description');
 const buttonSmaller = document.querySelector('.scale__control--smaller');
 const buttonBigger = document.querySelector('.scale__control--bigger');
-const uploudedImage = document.querySelector('.img-upload__preview');
-const img = uploudedImage.querySelector('img');
+const uploudedImageBlock = document.querySelector('.img-upload__preview');
+const uploudedImage = uploudedImageBlock.querySelector('img');
 const scaleField = document.querySelector('.scale__control--value');
 const effectsList = newFilePopup.querySelectorAll('.effects__radio');
 const effectSlider = document.querySelector('.effect-level__slider');
@@ -106,15 +106,15 @@ uploadField.addEventListener('change', () => {
 
     const targetElementValue  = evt.target.value;
 
-    if (img.classList.length === 2) {
-      img.className = 'img-upload__preview';
+    if (uploudedImage.classList.length === 2) {
+      uploudedImage.className = 'img-upload__preview';
     }
 
-    img.classList.add(`effects__preview--${targetElementValue}`);
+    uploudedImage.classList.add(`effects__preview--${targetElementValue}`);
 
     if(targetElementValue === 'none') {
       effectSlider.setAttribute('style', 'display: none;');
-      img.setAttribute('style', 'filter: none;');
+      uploudedImage.style.filter = 'none';
       return;
     } else {
       effectSlider.setAttribute('style', 'display: block;');
@@ -154,11 +154,12 @@ uploadField.addEventListener('change', () => {
       }
 
       if (targetElementValue === 'marvin') {
-        return img.setAttribute('style', `filter: ${styleFilter}(${effectLevelValue.value}%)`);
+        return uploudedImage.style.filter = `${styleFilter}(${effectLevelValue.value}%)`;
       } else if (targetElementValue === 'phobos') {
-        return img.setAttribute('style', `filter: ${styleFilter}(${effectLevelValue.value}px)`);
+        return uploudedImage.style.filter = `${styleFilter}(${effectLevelValue.value}px)`;
       }
-      img.setAttribute('style', `filter: ${styleFilter}(${effectLevelValue.value})`);
+      uploudedImage.style.filter = `${styleFilter}(${effectLevelValue.value})`;
+      // uploudedImage.setAttribute('style', `filter: ${styleFilter}(${effectLevelValue.value})`);
     });
 
   };
