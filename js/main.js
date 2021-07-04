@@ -1,4 +1,12 @@
-import './mini-images.js';
+import {getPicturesContainer} from './mini-images.js';
+import {setUploadFormSubmit, onCloseFormPopup} from './form.js';
+import {getData} from './api.js';
 import './big-picture.js';
 import './form.js';
-import './popup.js';
+
+getData((images) => {
+  getPicturesContainer(images);
+});
+
+
+setUploadFormSubmit(onCloseFormPopup);
