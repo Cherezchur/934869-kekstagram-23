@@ -1,4 +1,3 @@
-import {photoDescriptions} from './data.js';
 import { renderPopup } from './big-picture.js';
 
 const picturesContainer = document.querySelector('.pictures');
@@ -24,4 +23,4 @@ const getPicturesContainer = (data) => {
   picturesContainer.appendChild(pictureListFragment);
 };
 
-getPicturesContainer(photoDescriptions);
+export { getPicturesContainer };

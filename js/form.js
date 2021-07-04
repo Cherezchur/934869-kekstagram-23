@@ -1,3 +1,6 @@
+import {isEscEvent} from './util.js';
+import {sendData} from './api.js';
+
 const newFilePopup = document.querySelector('.img-upload__overlay');
 const uploudedImageBlock = document.querySelector('.img-upload__preview');
 const uploudedImage = uploudedImageBlock.querySelector('img');
@@ -5,6 +8,12 @@ const hashTagField = newFilePopup.querySelector('.text__hashtags');
 const scaleField = document.querySelector('.scale__control--value');
 const effectSlider = document.querySelector('.effect-level__slider');
 const effectLevelValue = document.querySelector('.effect-level__value');
+const uploadField = document.querySelector('#upload-file');
+const closeButtonNewFilePopup = newFilePopup.querySelector('.cancel');
+const commendField = newFilePopup.querySelector('.text__description');
+const effectsList = newFilePopup.querySelectorAll('.effects__radio');
+const scaleControl = newFilePopup.querySelector('.img-upload__scale');
+let onSuccessEvt = false;
 
 noUiSlider.create(effectSlider, {
   range: {
@@ -30,7 +39,7 @@ const hashTagValidity = () => {
 
   hashTagField.addEventListener('change', () => {
 
-    const regex = /^#[A-Za-zА-Яа-я]{1,19}$/;
+    const regex = /^#[A-Za-zА-Яа-я0-9]{1,19}$/;
     const hashTags = hashTagField.value.split(' ');
     const errorsList = [];
     const lowerCaseTags = [];
@@ -52,16 +61,19 @@ const hashTagValidity = () => {
       errorsList.push(element);
     });
 
-    if(errorsList.length >= 1) {
+    if(errorsList.length >= 1 ) {
       hashTagField.setCustomValidity('Хет-тег должен начинаться с символа #,\
             не повторяться,\
             cостоять из букв и цифр, а также иметь длину от 1 до 20 символов\
             и не может состоять из одного символа #\
             Хеш-теги не чувствительны к регистру');
+      hashTagField.style.border = 'solid red';
     } else if(hashTags.length > 5){
       hashTagField.setCustomValidity('Максимальное колличество хеш-тегов: 5');
+      hashTagField.style.border = 'solid red';
     } else {
       hashTagField.setCustomValidity('');
+      hashTagField.style.border = 'none';
     }
   });
 };
@@ -203,5 +215,119 @@ const imageScale = (evt) => {
   largeImage();
 };
 
-export {newFilePopup, uploudedImage, effectSlider, imageScale, hashTagField, hashTagValidity, getSliderOptions, addingEffects};
+const onCloseFormPopup = (evt) => {
+
+  const closeFormPopup = () => {
+
+    newFilePopup.classList.add('hidden');
+    document.body.classList.remove('modal-open');
+    uploadField.value = '';
+    hashTagField.value = '';
+    commendField.value = '';
+    scaleField.value = '100%';
+
+    document.removeEventListener('keydown', onCloseFormPopup);
+    closeButtonNewFilePopup.removeEventListener('click', onCloseFormPopup);
+    scaleControl.removeEventListener('click', imageScale);
+    for(let counter = 0 ; counter <= effectsList.length - 1 ; counter++) {
+      effectsList[counter].removeEventListener('click', addingEffects);
+    }
+  };
+
+  if (onSuccessEvt) {
+    return closeFormPopup();
+  }
+
+  if(evt.type === 'click') {
+    closeFormPopup();
+  } else if(isEscEvent(evt)) {
+    if(document.activeElement.className === 'text__hashtags' || document.activeElement.className === 'text__description') {
+      return;
+    }
+    closeFormPopup();
+  }
+
+  onSuccessEvt = false;
+};
+
+uploadField.addEventListener('change', () => {
+
+  newFilePopup.classList.remove('hidden');
+  document.body.classList.add('modal-open');
+
+  effectSlider.setAttribute('style', 'display: none;');
+  uploudedImage.className = 'img-upload__preview';
+  uploudedImage.style = 'none';
+
+  document.addEventListener('keydown', onCloseFormPopup);
+  closeButtonNewFilePopup.addEventListener('click', onCloseFormPopup);
+  scaleControl.addEventListener('click', imageScale);
+
+  for(let counter = 0 ; counter <= effectsList.length - 1 ; counter++) {
+    effectsList[counter].addEventListener('click', addingEffects);
+  }
+});
+
+const downloadStatusMessage = (template, content, title, button, buttonText, massageBlock, classTitle, message) => {
+
+  onSuccessEvt = false;
+
+  document.removeEventListener('keydown', onCloseFormPopup);
+
+  const popupTemplate = document.querySelector(template).content.querySelector(content);
+  const contentTemplate = popupTemplate.cloneNode(true);
+  const titleField = contentTemplate.querySelector(title);
+  const popupButton = contentTemplate.querySelector(button);
+
+  contentTemplate.style.zIndex = '3';
+  titleField.textContent = message;
+  popupButton.textContent = buttonText;
+
+  document.body.appendChild(contentTemplate);
+
+  const onCloseShowPopup = (evt) => {
+
+    const closeShowPopup = () => {
+      contentTemplate.remove();
+
+      document.addEventListener('keydown', onCloseFormPopup);
+      document.removeEventListener('click', onCloseShowPopup);
+      document.removeEventListener('keydown', onCloseShowPopup);
+
+      popupButton.removeEventListener('click', closeShowPopup);
+    };
+
+    if(isEscEvent(evt)) {
+      closeShowPopup();
+    } else if (evt.target.className === massageBlock || evt.target.className === popupButton || evt.target.className === classTitle) {
+      return;
+    }
+    closeShowPopup();
+  };
+
+  popupButton.addEventListener('click', onCloseShowPopup);
+  document.addEventListener('click', onCloseShowPopup);
+  document.addEventListener('keydown', onCloseShowPopup);
+};
+
+const setUploadFormSubmit = (onSuccess) => {
+  const uploadForm = document.querySelector('.img-upload__form');
+
+  hashTagValidity();
+
+  uploadForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    onSuccessEvt = true;
+    sendData(
+      () => onSuccess(),
+      () => downloadStatusMessage('#success', '.success', '.success__title', '.success__button', 'Круто!', 'success__inner', 'success__title', 'Изображение успешно загружено'),
+      () => downloadStatusMessage('#error', '.error', '.error__title', '.error__button', 'попробовать снова', 'error__inner', 'error__title', 'Не удалось отправить форму'),
+
+
+      new FormData(evt.target),
+    );
+  });
+};
+
+export {setUploadFormSubmit, onCloseFormPopup, onSuccessEvt};
 
