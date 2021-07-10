@@ -323,7 +323,6 @@ const setUploadFormSubmit = (onSuccess) => {
       () => downloadStatusMessage('#success', '.success', '.success__title', '.success__button', 'Круто!', 'success__inner', 'success__title', 'Изображение успешно загружено'),
       () => downloadStatusMessage('#error', '.error', '.error__title', '.error__button', 'попробовать снова', 'error__inner', 'error__title', 'Не удалось отправить форму'),
 
-
       new FormData(evt.target),
     );
   });

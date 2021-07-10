@@ -1,34 +1,74 @@
-// import { getPicturesContainer } from "./mini-images"; 
-import { getRandomInteger } from "./util.js";
+import { getRandomInteger } from './util.js';
 
-const buttonFilterRandom = document.querySelector('.filter-random');
+const buttonConteiner = document.querySelector('.img-filters__form');
+const buttons = Array.from(buttonConteiner.children);
+const buttonFilterDefault = document.querySelector('#filter-default');
+const buttonFilterRandom = document.querySelector('#filter-random');
+const buttonFilterDiscussed = document.querySelector('#filter-discussed');
 
 const removeFiltersHidden = () => {
-    const filters = document.querySelector('.img-filters');
-    filters.classList.remove('img-filters--inactive')
-}
+  const filters = document.querySelector('.img-filters');
+  filters.classList.remove('img-filters--inactive');
+};
 
-// buttonFilterRandom.addEventListener('click', 
+const assigningActiveClass = (activeButton) => {
+  buttons.forEach((element) => {
+    element.className = 'img-filters__button';
+  });
+  activeButton.classList.add('img-filters__button--active');
+};
 
-const getRandomImages = (images) => {
+const getDefaultImages = (images, cb) => {
 
+  buttonFilterDefault.addEventListener('click', (evt) => {
+    assigningActiveClass(evt.target);
+    cb();
+  });
+};
+
+const getRandomImages = (images, cb) => {
+
+  buttonFilterRandom.addEventListener('click', (evt) => {
+
+    assigningActiveClass(evt.target);
+
+    const randomImages = [];
     let imagesArray = images.slice();
-    let randomImageArray = [];
 
-    while(randomImageArray.length < 10) {
-        let randomIndex = getRandomInteger(0, imagesArray.length - 1);
-        randomImageArray.push(imagesArray[randomIndex]);
+    while(randomImages.length < 10) {
 
-        imagesArray.filter((element) => imagesArray.indexOf(element) !== randomIndex);
+      const randomIndex = getRandomInteger(0, imagesArray.length - 1);
+      randomImages.push(imagesArray[randomIndex]);
+
+      imagesArray = imagesArray.filter((element) => imagesArray.indexOf(element) !== randomIndex);
     }
 
-    console.log(imagesArray);
-    console.log(randomImageArray);
-}
+    cb(randomImages);
+  });
+};
 
-// const getTheMistDiscussed = (images) => {
-    
-// }
+const getTheMistDiscussedImages = (images, cb) => {
+
+  buttonFilterDiscussed.addEventListener('click', (evt) => {
+
+    assigningActiveClass(evt.target);
+
+    const theMistDiscussedImages = images.slice();
+
+    const getCommentsNumber = (element) => element.comments.length;
+
+    const comparingCommentsNumber = (imagesA, imagesB) => {
+
+      const rankA = getCommentsNumber(imagesA);
+      const rankB = getCommentsNumber(imagesB);
+
+      return rankB - rankA;
+    };
+
+    theMistDiscussedImages.sort(comparingCommentsNumber);
+    cb(theMistDiscussedImages);
+  });
+};
 
 
-export {removeFiltersHidden, getRandomImages};
+export {removeFiltersHidden, getRandomImages, getTheMistDiscussedImages, getDefaultImages};

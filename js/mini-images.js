@@ -20,6 +20,13 @@ const getPicturesContainer = (data) => {
     pictureListFragment.appendChild(pictureElement);
   });
 
+  if(picturesContainer.children.length > 2) {
+    const pictureList = picturesContainer.querySelectorAll('.picture');
+    for (let counter = Array.from(pictureList).length - 1 ; counter >= 0 ; counter-- ) {
+      picturesContainer.removeChild(pictureList[counter]);
+    }
+  }
+
   picturesContainer.appendChild(pictureListFragment);
 };
 
