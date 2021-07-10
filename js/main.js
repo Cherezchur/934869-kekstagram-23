@@ -5,14 +5,15 @@ import {removeFiltersHidden, getRandomImages, getTheMistDiscussedImages, getDefa
 import {getData} from './api.js';
 import './big-picture.js';
 import './form.js';
+import {debounce} from './utils/debounce.js';
 
 const RERENDER_DELAY = 500;
 
 getData((images) => {
   getPicturesContainer(images);
   removeFiltersHidden();
-  getDefaultImages(images, (_.debounce(() => getPicturesContainer(images), RERENDER_DELAY)));
-  getRandomImages(images, (_.debounce((randomImages) => getPicturesContainer(randomImages), RERENDER_DELAY)));
-  getTheMistDiscussedImages(images, (_.debounce((theMistDiscussedImages) => getPicturesContainer(theMistDiscussedImages), RERENDER_DELAY)));
+  getDefaultImages(images, (debounce(() => getPicturesContainer(images), RERENDER_DELAY)));
+  getRandomImages(images, (debounce((randomImages) => getPicturesContainer(randomImages), RERENDER_DELAY)));
+  getTheMistDiscussedImages(images, (debounce((theMistDiscussedImages) => getPicturesContainer(theMistDiscussedImages), RERENDER_DELAY)));
 });
 setUploadFormSubmit(onCloseFormPopup);
