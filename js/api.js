@@ -8,7 +8,7 @@ const getData = (onSuccess) => {
     })
     .catch(() => {
       showAlert('Не удалось загрузить данные с сервера');
-    })
+    });
 };
 
 const sendData = (onSuccess, downloadStatus, errorStatus, body) => {
