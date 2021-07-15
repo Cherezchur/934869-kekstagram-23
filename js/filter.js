@@ -1,10 +1,10 @@
 import { getRandomInteger } from './util.js';
+import {getPicturesContainer} from './mini-images.js'
+import {debounce} from './utils/debounce.js';
 
 const buttonConteiner = document.querySelector('.img-filters__form');
 const buttons = Array.from(buttonConteiner.children);
-const buttonFilterDefault = document.querySelector('#filter-default');
-const buttonFilterRandom = document.querySelector('#filter-random');
-const buttonFilterDiscussed = document.querySelector('#filter-discussed');
+const RERENDER_DELAY = 500;
 
 const removeFiltersHidden = () => {
   const filters = document.querySelector('.img-filters');
@@ -18,57 +18,43 @@ const assigningActiveClass = (activeButton) => {
   activeButton.classList.add('img-filters__button--active');
 };
 
-const getDefaultImages = (images, cb) => {
+const onFiltersClick = (images) => {
 
-  buttonFilterDefault.addEventListener('click', (evt) => {
-    assigningActiveClass(evt.target);
-    cb();
-  });
-};
-
-const getRandomImages = (images, cb) => {
-
-  buttonFilterRandom.addEventListener('click', (evt) => {
+  buttonConteiner.addEventListener('click', debounce((evt) => {
 
     assigningActiveClass(evt.target);
+  
+    if(evt.target.id === 'filter-default') {
+      getPicturesContainer(images);
+    } else if (evt.target.id === 'filter-random') {
+      const randomImages = [];
+      let imagesArray = images.slice();
 
-    const randomImages = [];
-    let imagesArray = images.slice();
+      while(randomImages.length < 10) {
+        const randomIndex = getRandomInteger(0, imagesArray.length - 1);
+        randomImages.push(imagesArray[randomIndex]);
 
-    while(randomImages.length < 10) {
+        imagesArray = imagesArray.filter((element) => imagesArray.indexOf(element) !== randomIndex);
+      }
 
-      const randomIndex = getRandomInteger(0, imagesArray.length - 1);
-      randomImages.push(imagesArray[randomIndex]);
+      getPicturesContainer(randomImages);
+    } else if (evt.target.id === 'filter-discussed') {
+      const theMistDiscussedImages = images.slice();
 
-      imagesArray = imagesArray.filter((element) => imagesArray.indexOf(element) !== randomIndex);
+      const getCommentsNumber = (element) => element.comments.length;
+
+      const comparingCommentsNumber = (imagesA, imagesB) => {
+
+        const rankA = getCommentsNumber(imagesA);
+        const rankB = getCommentsNumber(imagesB);
+
+        return rankB - rankA;
+      };
+
+      theMistDiscussedImages.sort(comparingCommentsNumber);
+      getPicturesContainer(theMistDiscussedImages);
     }
+  }), RERENDER_DELAY);
+}
 
-    cb(randomImages);
-  });
-};
-
-const getTheMistDiscussedImages = (images, cb) => {
-
-  buttonFilterDiscussed.addEventListener('click', (evt) => {
-
-    assigningActiveClass(evt.target);
-
-    const theMistDiscussedImages = images.slice();
-
-    const getCommentsNumber = (element) => element.comments.length;
-
-    const comparingCommentsNumber = (imagesA, imagesB) => {
-
-      const rankA = getCommentsNumber(imagesA);
-      const rankB = getCommentsNumber(imagesB);
-
-      return rankB - rankA;
-    };
-
-    theMistDiscussedImages.sort(comparingCommentsNumber);
-    cb(theMistDiscussedImages);
-  });
-};
-
-
-export {removeFiltersHidden, getRandomImages, getTheMistDiscussedImages, getDefaultImages};
+export {removeFiltersHidden, onFiltersClick};

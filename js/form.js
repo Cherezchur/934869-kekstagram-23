@@ -6,6 +6,7 @@ const uploudedImageBlock = document.querySelector('.img-upload__preview');
 const uploudedImage = uploudedImageBlock.querySelector('img');
 const hashTagField = newFilePopup.querySelector('.text__hashtags');
 const scaleField = document.querySelector('.scale__control--value');
+// const effectsList = document.querySelector('.effects__list');
 const effectSlider = document.querySelector('.effect-level__slider');
 const effectLevelValue = document.querySelector('.effect-level__value');
 const uploadField = document.querySelector('#upload-file');
@@ -13,6 +14,9 @@ const closeButtonNewFilePopup = newFilePopup.querySelector('.cancel');
 const commendField = newFilePopup.querySelector('.text__description');
 const effectsList = newFilePopup.querySelectorAll('.effects__radio');
 const scaleControl = newFilePopup.querySelector('.img-upload__scale');
+const buttonSmaller = document.querySelector('.scale__control--smaller');
+const buttonBigger = document.querySelector('.scale__control--bigger');
+
 let onSuccessEvt = false;
 
 noUiSlider.create(effectSlider, {
@@ -103,7 +107,13 @@ const getSliderOptions = (minValue, maxValue, stepValue) => {
 
 const addingEffects = (evt) => {
 
+  Array.from(effectsList).forEach((element) => {
+    element.removeAttribute('checked', 'checked');
+  })
+  evt.target.setAttribute('checked', 'checked');
+
   const targetElementValue  = evt.target.value;
+
   let styleFilter;
 
   if (uploudedImage.classList.length === 2) {
@@ -165,9 +175,6 @@ const addingEffects = (evt) => {
 
 const imageScale = (evt) => {
 
-  const buttonSmaller = document.querySelector('.scale__control--smaller');
-  const buttonBigger = document.querySelector('.scale__control--bigger');
-
   const reducedImage = () => {
 
     switch (scaleField.value) {
@@ -221,6 +228,10 @@ const onCloseFormPopup = (evt) => {
 
     newFilePopup.classList.add('hidden');
     document.body.classList.remove('modal-open');
+
+    if(buttonSmaller.hasAttribute('disabled')){
+      buttonSmaller.removeAttribute('disabled');
+    }
     uploadField.value = '';
     hashTagField.value = '';
     commendField.value = '';
@@ -231,6 +242,7 @@ const onCloseFormPopup = (evt) => {
     scaleControl.removeEventListener('click', imageScale);
     for(let counter = 0 ; counter <= effectsList.length - 1 ; counter++) {
       effectsList[counter].removeEventListener('click', addingEffects);
+      effectsList[counter].removeAttribute('checked', 'checked');
     }
   };
 
