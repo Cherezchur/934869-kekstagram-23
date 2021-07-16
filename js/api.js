@@ -1,7 +1,10 @@
 import {showAlert} from './util.js';
 
+const SERVER = 'https://23.javascript.pages.academy/kekstagram';
+const DATA = 'https://23.javascript.pages.academy/kekstagram/data';
+
 const getData = (onSuccess) => {
-  fetch('https://23.javascript.pages.academy/kekstagram/data')
+  fetch(DATA)
     .then((response) => response.json())
     .then((images) => {
       onSuccess(images);
@@ -13,7 +16,7 @@ const getData = (onSuccess) => {
 
 const sendData = (onSuccess, downloadStatus, errorStatus, body) => {
 
-  fetch('https://23.javascript.pages.academy/kekstagram',
+  fetch(SERVER,
     {
       method: 'POST',
       body: body,

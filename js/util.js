@@ -6,8 +6,6 @@ const getRandomInteger = (firstInteger, lastInteger) => {
   return Math.floor(result);
 };
 
-const getCommentValidity = (comment, maxSymbols) =>  comment.length <= maxSymbols;
-
 const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
 const showAlert = (message) => {
@@ -25,4 +23,4 @@ const showAlert = (message) => {
   document.body.append(alertContainer);
 };
 
-export {getRandomInteger, getCommentValidity, isEscEvent, showAlert};
+export {getRandomInteger, isEscEvent, showAlert};

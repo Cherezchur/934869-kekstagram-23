@@ -9,7 +9,8 @@ const socialComments = bigPicture.querySelector('.social__comments');
 const socialCommentsCount = bigPicture.querySelector('.social__comment-count');
 const commentsLoader = bigPicture.querySelector('.comments-loader');
 
-let commentsNumber = 5;
+const NUMBER_UPLOADED_COMMENTS = 5;
+let commentsNumber = NUMBER_UPLOADED_COMMENTS;
 
 const renderPopup = (data) => {
 
@@ -49,7 +50,7 @@ const renderPopup = (data) => {
     }
   };
 
-  const displayingCommets = () => {
+  const showCommets = () => {
     const socialCommentsArray = Array.from(socialComments.children);
 
     let visibleCommentsCouter = 0;
@@ -60,7 +61,7 @@ const renderPopup = (data) => {
       }
     });
 
-    if (visibleCommentsCouter < 5) {
+    if (visibleCommentsCouter < NUMBER_UPLOADED_COMMENTS) {
       socialCommentsCount.innerHTML = `${data.comments.length} из <span class="comments-count">${data.comments.length}</span> комментариев`;
       for (let counter = socialCommentsArray.length - 1; counter >= 0 ; counter--) {
         socialCommentsArray[counter].classList.remove('hidden');
@@ -78,9 +79,9 @@ const renderPopup = (data) => {
     }
   };
 
-  const commentsLoaderClick = () => {
-    commentsNumber += 5;
-    displayingCommets();
+  const onCommentsLoaderClick = () => {
+    commentsNumber += NUMBER_UPLOADED_COMMENTS;
+    showCommets();
   };
 
   const onCloseBigPicturePopup = (evt) => {
@@ -98,9 +99,9 @@ const renderPopup = (data) => {
         socialComments.removeChild(Array.from(socialComments.children)[counter]);
       }
 
-      commentsNumber = 5;
+      commentsNumber = NUMBER_UPLOADED_COMMENTS;
 
-      commentsLoader.removeEventListener('click', commentsLoaderClick);
+      commentsLoader.removeEventListener('click', onCommentsLoaderClick);
       closeBigPictureButton.removeEventListener('click', onCloseBigPicturePopup);
       document.removeEventListener('keydown', onCloseBigPicturePopup);
     };
@@ -113,9 +114,9 @@ const renderPopup = (data) => {
   };
 
   getSocialComments();
-  displayingCommets();
+  showCommets();
 
-  commentsLoader.addEventListener('click', commentsLoaderClick);
+  commentsLoader.addEventListener('click', onCommentsLoaderClick);
 
   closeBigPictureButton.addEventListener('click', onCloseBigPicturePopup);
 

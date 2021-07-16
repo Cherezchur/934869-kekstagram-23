@@ -6,7 +6,6 @@ const uploudedImageBlock = document.querySelector('.img-upload__preview');
 const uploudedImage = uploudedImageBlock.querySelector('img');
 const hashTagField = newFilePopup.querySelector('.text__hashtags');
 const scaleField = document.querySelector('.scale__control--value');
-// const effectsList = document.querySelector('.effects__list');
 const effectSlider = document.querySelector('.effect-level__slider');
 const effectLevelValue = document.querySelector('.effect-level__value');
 const uploadField = document.querySelector('#upload-file');
@@ -16,6 +15,8 @@ const effectsList = newFilePopup.querySelectorAll('.effects__radio');
 const scaleControl = newFilePopup.querySelector('.img-upload__scale');
 const buttonSmaller = document.querySelector('.scale__control--smaller');
 const buttonBigger = document.querySelector('.scale__control--bigger');
+
+const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
 let onSuccessEvt = false;
 
@@ -39,7 +40,7 @@ noUiSlider.create(effectSlider, {
   },
 });
 
-const hashTagValidity = () => {
+const checkValidityHashTag = () => {
 
   hashTagField.addEventListener('change', () => {
 
@@ -105,11 +106,11 @@ const getSliderOptions = (minValue, maxValue, stepValue) => {
   });
 };
 
-const addingEffects = (evt) => {
+const onAddEffectsClick = (evt) => {
 
   Array.from(effectsList).forEach((element) => {
     element.removeAttribute('checked', 'checked');
-  })
+  });
   evt.target.setAttribute('checked', 'checked');
 
   const targetElementValue  = evt.target.value;
@@ -173,7 +174,7 @@ const addingEffects = (evt) => {
 
 };
 
-const imageScale = (evt) => {
+const onScaleControlClick = (evt) => {
 
   const reducedImage = () => {
 
@@ -196,7 +197,7 @@ const imageScale = (evt) => {
 
   };
 
-  const largeImage = () => {
+  const enlargeImage = () => {
 
     switch (scaleField.value) {
       case '75%':
@@ -219,7 +220,7 @@ const imageScale = (evt) => {
   if(evt.target.textContent === 'Уменьшить') {
     return reducedImage();
   }
-  largeImage();
+  enlargeImage();
 };
 
 const onCloseFormPopup = (evt) => {
@@ -239,9 +240,9 @@ const onCloseFormPopup = (evt) => {
 
     document.removeEventListener('keydown', onCloseFormPopup);
     closeButtonNewFilePopup.removeEventListener('click', onCloseFormPopup);
-    scaleControl.removeEventListener('click', imageScale);
+    scaleControl.removeEventListener('click', onScaleControlClick);
     for(let counter = 0 ; counter <= effectsList.length - 1 ; counter++) {
-      effectsList[counter].removeEventListener('click', addingEffects);
+      effectsList[counter].removeEventListener('click', onAddEffectsClick);
       effectsList[counter].removeAttribute('checked', 'checked');
     }
   };
@@ -262,7 +263,27 @@ const onCloseFormPopup = (evt) => {
   onSuccessEvt = false;
 };
 
+const addImageToForm = () => {
+
+  const file = uploadField.files[0];
+  const fileName = file.name.toLowerCase();
+
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+
+  if (matches) {
+    const reader = new FileReader();
+
+    reader.addEventListener('load', () => {
+      uploudedImage.src = reader.result;
+    });
+
+    reader.readAsDataURL(file);
+  }
+};
+
 uploadField.addEventListener('change', () => {
+
+  addImageToForm();
 
   newFilePopup.classList.remove('hidden');
   document.body.classList.add('modal-open');
@@ -273,10 +294,10 @@ uploadField.addEventListener('change', () => {
 
   document.addEventListener('keydown', onCloseFormPopup);
   closeButtonNewFilePopup.addEventListener('click', onCloseFormPopup);
-  scaleControl.addEventListener('click', imageScale);
+  scaleControl.addEventListener('click', onScaleControlClick);
 
   for(let counter = 0 ; counter <= effectsList.length - 1 ; counter++) {
-    effectsList[counter].addEventListener('click', addingEffects);
+    effectsList[counter].addEventListener('click', onAddEffectsClick);
   }
 });
 
@@ -325,7 +346,7 @@ const downloadStatusMessage = (template, content, title, button, buttonText, mas
 const setUploadFormSubmit = (onSuccess) => {
   const uploadForm = document.querySelector('.img-upload__form');
 
-  hashTagValidity();
+  checkValidityHashTag();
 
   uploadForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
